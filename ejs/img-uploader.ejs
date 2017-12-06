@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>list</title>
+    <link href="http://static.tcy365.com/cdn/bootstrap/3.3.7/custom/1.0.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div id="uploader">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">上传图片</h3>
+        </div>
+        <div class="panel-body">
+            <img-uploader ref="imgUploader"
+                          :thumbnail-width="thumbnailWidth"
+                          :thumbnail-height="thumbnailHeight"
+                          :imgs="imgs"
+                          :server="server"
+                          :result-filter="resultFilter"
+                          :form-data="formData"
+                          :method="method"
+                          :duplicate="duplicate"
+                          :accept="accept"
+                          :file-single-size-limit="fileSingleSizeLimit"
+                          @runtime-error="showError">
+            </img-uploader>
+        </div>
+        <div class="panel-footer clearfix">
+            <span class="text-danger">{{error}}</span>
+            <span class="pull-right">
+                <button type="button" class="btn btn-sm btn-primary" @click="getUrls">获取图片地址列表</button>
+                <button type="button" class="btn btn-sm btn-primary" @click="getUploadedImgs">获取已上传的图片列表</button>
+                <button type="button" class="btn btn-sm btn-primary" @click="getPendingImgs">获取正在上传的图片列表</button>
+                <button type="button" class="btn btn-sm btn-primary" @click="getErrorImgs">获取上传错误的图片列表</button>
+                <button type="button" class="btn btn-sm btn-primary" @click="isPending">当前是否有图片正在上传</button>
+                <button type="button" class="btn btn-sm btn-primary" @click="refreshUploader">刷新图片上传组件</button>
+                <button type="button" class="btn btn-sm btn-primary" @click="resetUploader">重置图片上传组件对象</button>
+                <button type="button" class="btn btn-sm btn-primary" @click="cancelUpload">取消正在上传的图片</button>
+            </span>
+        </div>
+    </div>
+    <div>
+        <button type="button" class="btn btn-sm btn-primary" @click="changeThumbnail">
+            改变图片的缩略图大小
+        </button>
+        <button type="button" class="btn btn-sm btn-primary" @click="changeMethod">
+            图片上传的方式post-get
+        </button>
+        <button type="button" class="btn btn-sm btn-primary" @click="changeAccept">
+            图片格式jpg-png
+        </button>
+        <button type="button" class="btn btn-sm btn-primary" @click="changeFileSingleSizeLimit">
+            单个文件大小2M-1K
+        </button>
+        <button type="button" class="btn btn-sm btn-primary" @click="changeDuplicate">
+            图片不可重复-图片可重复
+        </button>
+    </div>
+
+</div>
+<script src="http://static.uc108.com/cdn/jquery/2.1.0/jquery.js"></script>
+<script src="http://static.uc108.com/cdn/webuploader/0.1.6/webuploader.html5only.min.js"></script>
+<%= htmlWebpackPlugin.options.script %>
+</body>
+</html>
