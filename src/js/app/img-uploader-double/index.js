@@ -10,20 +10,40 @@ new Vue({
         ImgUploader
     },
     data: {
-        error: '',
-        imgs: [],
-        formData: {
-            os: 1
+        uploader1: {
+            error: '',
+            imgs: [],
+            formData: {
+                os: 1
+            },
+            server: '/NewApp/UplodeICon?APPCode=kdmj&position=2',
+            thumbnailWidth: 200,
+            thumbnailHeight: 200,
+            method: 'post',
+            duplicate: false,
+            accept: {
+                extensions: 'jpg',
+                mimeTypes: 'image/jpg'
+            },
+            fileSingleSizeLimit: 2 * 1024 * 1024
         },
-        server: '/NewApp/UplodeICon?APPCode=kdmj&position=2',
-        thumbnailWidth: 200,
-        thumbnailHeight: 200,
-        method: 'post',
-        duplicate: false,
-        accept: {
-            extensions: 'jpg,png'
-        },
-        fileSingleSizeLimit: 2 * 1024 * 1024
+        uploader2: {
+            error: '',
+            imgs: [],
+            formData: {
+                os: 1
+            },
+            server: '/NewApp/UplodeICon?APPCode=kdmj&position=2',
+            thumbnailWidth: 200,
+            thumbnailHeight: 200,
+            method: 'post',
+            duplicate: false,
+            accept: {
+                extensions: 'jpg',
+                mimeTypes: 'image/jpg'
+            },
+            fileSingleSizeLimit: 2 * 1024 * 1024
+        }
     },
     methods: {
         changeThumbnail(){
@@ -91,9 +111,6 @@ new Vue({
         },
         setImgs(){
             this.imgs = ['http://m.tcy365.com/img//006d9ae4-6688-45a9-a031-79268e63855f.png', 'http://m.tcy365.com/img//6e02965f-a07e-481c-990f-5e59084f6651.png'];
-        },
-        deleteImg(info){
-            console.log(info);
         }
     }
 });

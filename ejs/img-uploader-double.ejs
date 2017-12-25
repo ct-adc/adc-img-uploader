@@ -13,21 +13,34 @@
         </div>
         <div class="panel-body">
             <img-uploader ref="imgUploader"
-                          :thumbnail-width="thumbnailWidth"
-                          :thumbnail-height="thumbnailHeight"
-                          :imgs="imgs"
-                          :server="server"
-                          :result-filter="resultFilter"
-                          :form-data="formData"
-                          :method="method"
-                          :duplicate="duplicate"
-                          :accept="accept"
-                          :file-single-size-limit="fileSingleSizeLimit"
-                          @runtime-error="showError" @delete="deleteImg">
+                          :thumbnail-width="uploader1.thumbnailWidth"
+                          :thumbnail-height="uploader1.thumbnailHeight"
+                          :imgs="uploader1.imgs"
+                          :server="uploader1.server"
+                          :result-filter="uploader1.resultFilter"
+                          :form-data="uploader1.formData"
+                          :method="uploader1.method"
+                          :duplicate="uploader1.duplicate"
+                          :accept="uploader1.accept"
+                          :file-single-size-limit="uploader1.fileSingleSizeLimit"
+                          @runtime-error="showError">
+            </img-uploader>
+            <img-uploader ref="imgUploader"
+                          :thumbnail-width="uploader2.thumbnailWidth"
+                          :thumbnail-height="uploader2.thumbnailHeight"
+                          :imgs="uploader2.imgs"
+                          :server="uploader2.server"
+                          :result-filter="uploader2.resultFilter"
+                          :form-data="uploader2.formData"
+                          :method="uploader2.method"
+                          :duplicate="uploader2.duplicate"
+                          :accept="uploader2.accept"
+                          :file-single-size-limit="uploader2.fileSingleSizeLimit"
+                          @runtime-error="showError">
             </img-uploader>
         </div>
         <div class="panel-footer clearfix">
-            <span class="text-danger">{{error}}</span>
+            <span class="text-danger">{{uploader1.error}}{{uploader2.error}}</span>
             <span class="pull-right">
                 <button type="button" class="btn btn-sm btn-primary" @click="getUrls">获取图片地址列表</button>
                 <button type="button" class="btn btn-sm btn-primary" @click="getUploadedImgs">获取已上传的图片列表</button>
@@ -48,7 +61,7 @@
             图片上传的方式post-get
         </button>
         <button type="button" class="btn btn-sm btn-primary" @click="changeAccept">
-            图片格式jpg->png
+            图片格式jpg-png
         </button>
         <button type="button" class="btn btn-sm btn-primary" @click="changeFileSingleSizeLimit">
             单个文件大小2M-1K

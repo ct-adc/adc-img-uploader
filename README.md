@@ -4,14 +4,13 @@
 
 ## 使用
 
-从npm安装`ct-adc-uploaders`
+从npm安装`ct-adc-img-uploader`
 ```
-npm install ct-adc-uploaders
+npm install ct-adc-img-uploader
 ```
 在代码中引用
 ```
-import uploaders from 'ct-adc-uploaders';
-var ImgUploader=uploaders.ImgUploader;
+import ImgUploader from 'ct-adc-img-uploader';
 
 //全局注册
 Vue.component(ImgUploader.name,ImgUploader);

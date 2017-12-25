@@ -17,7 +17,7 @@
                 <span class="glyphicon glyphicon-trash"></span>
             </div>
         </li>
-        <li class="addThumb"
+        <li class="addThumb" ref="addThumb"
             v-if="thumbs.length<fileNumLimit"
             :style="{width:thumbnailWidth+'px',height:thumbnailHeight+'px'}">
             <span class="glyphicon glyphicon-plus"></span>
@@ -193,6 +193,7 @@
                     previewSrc: '', // 预览生成后的image data
                     url: '' // 上传到服务器后的返回地址
                 };
+                this.thumbs = [];
                 this.imgs.map(url=> {
                     this.thumbs.push(utility.base.extend(defaults, {
                         url: url,
@@ -206,6 +207,11 @@
                     this.$emit('runtime-error', '');
                     this.$emit('change-status');
                 }
+                this.$emit('delete', {
+                    index: index,
+                    url: this.thumbs[index].url,
+                    status: this.thumbs[index].status
+                });
                 if (this.thumbs[index].file !== null) {
                     this.uploader.removeFile(this.thumbs[index].file);
                 }
@@ -221,7 +227,7 @@
                 // 实例化
                 var uploader = WebUploader.create({
                     pick: {
-                        id: '.addThumb'
+                        id: this.$refs.addThumb
                     },
                     server: that.server,
                     method: that.method,
@@ -359,7 +365,7 @@
                 if (newVal.length < oldVal.length && oldVal.length === this.fileNumLimit) {
                     this.$nextTick(()=> {
                         this.uploader.addButton({
-                            id: '.addThumb'
+                            id: this.$refs.addThumb
                         });
                     })
                 }
