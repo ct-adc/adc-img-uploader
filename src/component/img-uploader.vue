@@ -73,7 +73,7 @@
             },
             duplicate: {
                 type: Boolean,
-                default: true
+                default: false
             },
             accept: {
                 type: Object,
@@ -194,12 +194,14 @@
                     url: '' // 上传到服务器后的返回地址
                 };
                 this.thumbs = [];
-                this.imgs.map(url=> {
-                    this.thumbs.push(utility.base.extend(defaults, {
+                this.imgs.map((url)=> {
+                    var thumb = utility.base.extend(defaults, {
                         url: url,
                         previewSrc: url,
                         status: 'complete'
-                    }))
+                    });
+
+                    this.thumbs.push(JSON.parse(JSON.stringify(thumb)));
                 })
             },
             removeFile(index){
@@ -273,9 +275,38 @@
                     that.thumbs.push(fileData);
                 }
 
+                function hashString( str ) {
+                    var hash = 0,
+                            i = 0,
+                            len = str.length,
+                            _char;
+
+                    for ( ; i < len; i++ ) {
+                        _char = str.charCodeAt( i );
+                        hash = _char + (hash << 6) + (hash << 16) - hash;
+                    }
+
+                    return hash;
+                }
                 uploader.on('uploadBeforeSend', function(object, data, headers) {
                     utility.base.extend(data, that.formData);
                 })
+                uploader.on( 'beforeFileQueued', function( file ) {
+                    if (!that.duplicate){
+                        var hash = file.__hash || (file.__hash = hashString( file.name +
+                                file.size + file.lastModifiedDate ));
+
+                        // 已经重复了
+                        var hasHash = that.thumbs.filter(thumb=>{
+                                    return thumb.file['__hash'] === hash;
+                                }).length > 0;
+                        if ( hasHash ) {
+                            that.$emit( 'runtime-error', ERRORS['F_DUPLICATE'], 'F_DUPLICATE');
+                            return false;
+                        }
+                    }
+                    return true;
+                });
                 uploader.onFileQueued = function(file) {
                     addFile(file);
                 };
@@ -317,7 +348,7 @@
                     })
                 };
                 uploader.onError = function(code) {
-                    that.$emit('runtime-error', ERRORS[code] || '请检查文件是否符合要求!');
+                    that.$emit('runtime-error', ERRORS[code] || '请检查文件是否符合要求!', code);
                     that.$emit('change-status');
                 };
                 that.uploader = uploader;
@@ -377,15 +408,21 @@
                 this.uploader.option('method', newVal);
             },
             duplicate(){
-                this.uploader.destroy();
+                if (typeof this.uploader !== 'undefined'){
+                    this.uploader.destroy();
+                }
                 this.initUploader();
             },
             accept(){
-                this.uploader.destroy();
+                if (typeof this.uploader !== 'undefined'){
+                    this.uploader.destroy();
+                }
                 this.initUploader();
             },
             fileSingleSizeLimit(){
-                this.uploader.destroy();
+                if (typeof this.uploader !== 'undefined'){
+                    this.uploader.destroy();
+                }
                 this.initUploader();
             }
         }

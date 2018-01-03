@@ -20,8 +20,7 @@
                           :result-filter="resultFilter"
                           :form-data="formData"
                           :method="method"
-                          :duplicate="duplicate"
-                          :accept="accept"
+                          :accept="{extensions: 'jpg, png',mimeTypes: 'image/jpg, image/png'}"
                           :file-single-size-limit="fileSingleSizeLimit"
                           @runtime-error="showError" @delete="deleteImg">
             </img-uploader>
@@ -63,7 +62,7 @@
 
 </div>
 <script src="http://static.uc108.com/cdn/jquery/2.1.0/jquery.js"></script>
-<script src="http://static.uc108.com/cdn/webuploader/0.1.6/webuploader.html5only.min.js"></script>
+<script src="http://static.uc108.com/cdn/webuploader/0.1.6/webuploader.html5only.js"></script>
 <%= htmlWebpackPlugin.options.script %>
 </body>
 </html>

@@ -3,7 +3,6 @@
  */
 import Vue from 'vue';
 import ImgUploader from '../../../component/img-uploader.vue';
-
 new Vue({
     el: '#uploader',
     components: {
@@ -15,13 +14,14 @@ new Vue({
         formData: {
             os: 1
         },
-        server: '/NewApp/UplodeICon?APPCode=kdmj&position=2',
+        server: '/api/common/uploadPic',
         thumbnailWidth: 200,
         thumbnailHeight: 200,
         method: 'post',
         duplicate: false,
         accept: {
-            extensions: 'jpg,png'
+            extensions: 'jpg, png',
+            mimeTypes: 'image/jpg, image/png'
         },
         fileSingleSizeLimit: 2 * 1024 * 1024
     },
@@ -46,10 +46,10 @@ new Vue({
             this.duplicate = true;
         },
         resultFilter(res){
-            if (res.IsFinish) {
+            if (res.Code === 0) {
                 return {
                     status: true,
-                    path: res.ReturnPath
+                    path: res.Data
                 };
             }
             return {
@@ -90,7 +90,7 @@ new Vue({
             this.$refs.imgUploader.cancelUpload();
         },
         setImgs(){
-            this.imgs = ['http://m.tcy365.com/img//006d9ae4-6688-45a9-a031-79268e63855f.png', 'http://m.tcy365.com/img//6e02965f-a07e-481c-990f-5e59084f6651.png'];
+            this.imgs = ['http://mobileimg.tcy365.com/Logo/qzsl_115.png', 'http://mobileimg.tcy365.com/Logo/qzsm_115.png'];
         },
         deleteImg(info){
             console.log(info);
