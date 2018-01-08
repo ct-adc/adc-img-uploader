@@ -58,7 +58,7 @@ new Vue({
             };
         },
         showError(error){
-            this.error = error;
+            this.error = error.msg;
         },
         getUrls(){
             console.log(this.$refs.imgUploader.getUrls());

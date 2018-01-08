@@ -206,7 +206,10 @@
             },
             removeFile(index){
                 if (index === this.thumbs.length - 1) {
-                    this.$emit('runtime-error', '');
+                    this.$emit('runtime-error', {
+                        code: 'RESET',
+                        msg: ''
+                    });
                     this.$emit('change-status');
                 }
                 this.$emit('delete', {
@@ -298,10 +301,13 @@
 
                         // 已经重复了
                         var hasHash = that.thumbs.filter(thumb=>{
-                                    return thumb.file['__hash'] === hash;
+                                    return thumb.file !== null && thumb.file['__hash'] === hash;
                                 }).length > 0;
                         if ( hasHash ) {
-                            that.$emit( 'runtime-error', ERRORS['F_DUPLICATE'], 'F_DUPLICATE');
+                            that.$emit( 'runtime-error', {
+                                code: 'F_DUPLICATE',
+                                msg: ERRORS['F_DUPLICATE']
+                            });
                             return false;
                         }
                     }
@@ -317,14 +323,20 @@
                             if (result.status) {
                                 item.url = result.path;
                                 that.$emit('runtime-success');
-                                that.$emit('runtime-error', '');
+                                that.$emit('runtime-error', {
+                                    code: 'RESET',
+                                    msg: ''
+                                });
                                 that.$emit('change-status');
                                 return item;
                             } else {
                                 item.url = '';
                                 item.status = 'error';
                                 item.errorText = result.msg;
-                                that.$emit('runtime-error', result.msg);
+                                that.$emit('runtime-error', {
+                                    code: 'RESPONSE_ERROR',
+                                    msg: result.msg
+                                });
                                 that.$emit('change-status');
                                 return item;
                             }
@@ -336,7 +348,10 @@
                 };
                 uploader.onUploadError = function(file, reason) {
                     that.thumbs = that.thumbs.map((item)=> {
-                        that.$emit('runtime-error', reason);
+                        that.$emit('runtime-error', {
+                            code: 'HTTP_ERROR',
+                            msg: reason
+                        });
                         that.$emit('change-status');
                         if (item.file !== null && item.file.id === file.id) {
                             item.url = '';
@@ -348,7 +363,10 @@
                     })
                 };
                 uploader.onError = function(code) {
-                    that.$emit('runtime-error', ERRORS[code] || '请检查文件是否符合要求!', code);
+                    that.$emit('runtime-error', {
+                        code: code,
+                        msg: ERRORS[code] || '请检查文件是否符合要求!'
+                    });
                     that.$emit('change-status');
                 };
                 that.uploader = uploader;
@@ -449,7 +467,7 @@
 
     .ct-adc-img-uploader.filelist {
         list-style: none;
-        margin: 0;
+        margin: -8px;
         padding: 0;
     }
 
@@ -463,12 +481,10 @@
     }
 
     .ct-adc-img-uploader.filelist li {
-        /*width: 110px;*/
-        /*height: 110px;*/
         border: 1px solid #d4d4d4;
         border-radius: 6px;
         text-align: center;
-        margin: 0 8px 20px 0;
+        margin: 8px;
         position: relative;
         display: inline;
         float: left;
