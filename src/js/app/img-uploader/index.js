@@ -10,7 +10,7 @@ new Vue({
     },
     data: {
         error: '',
-        imgs: [],
+        imgs: ['http://mobileimg.tcy365.com/Logo/qzsl_115.png', 'http://mobileimg.tcy365.com/Logo/qzsm_115.png'],
         formData: {
             os: 1
         },

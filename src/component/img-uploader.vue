@@ -161,8 +161,10 @@
             this.initUploader();
             setTimeout(()=> {
                 var element = this.$refs.root.querySelector('.webuploader-element-invisible');
-                element.style.width = this.thumbnailWidth + 'px';
-                element.style.height = this.thumbnailHeight + 'px';
+                if(element !== null){
+                    element.style.width = this.thumbnailWidth + 'px';
+                    element.style.height = this.thumbnailHeight + 'px';
+                }
             })
         },
         methods: {
@@ -311,7 +313,7 @@
                             return false;
                         }
                     }
-                    return true;
+                    return that.thumbs.length < that.fileNumLimit;
                 });
                 uploader.onFileQueued = function(file) {
                     addFile(file);
@@ -428,20 +430,20 @@
             duplicate(){
                 if (typeof this.uploader !== 'undefined'){
                     this.uploader.destroy();
+                    this.initUploader();
                 }
-                this.initUploader();
             },
             accept(){
                 if (typeof this.uploader !== 'undefined'){
                     this.uploader.destroy();
+                    this.initUploader();
                 }
-                this.initUploader();
             },
             fileSingleSizeLimit(){
                 if (typeof this.uploader !== 'undefined'){
                     this.uploader.destroy();
+                    this.initUploader();
                 }
-                this.initUploader();
             }
         }
     }
