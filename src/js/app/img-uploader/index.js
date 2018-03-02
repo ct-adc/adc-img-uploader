@@ -14,6 +14,7 @@ new Vue({
         formData: {
             os: 1
         },
+        // server: '/api/common/uploadPic',
         server: '/api/common/uploadPic',
         thumbnailWidth: 200,
         thumbnailHeight: 200,

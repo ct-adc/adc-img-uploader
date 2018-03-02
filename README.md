@@ -60,6 +60,7 @@ accept | 上传文件类型限制 | Object | | | 设置允许上传的图片的�
 fileSingleSizeLimit | 单个文件的大小限制 | Number | 2 * 1024 * 1024 | | 单位: Byte
 fileNumLimit | 可上传图片数量 | Number | 5 | | 最多可上传几张图片
 formData | 表单数据 | Object | {} | | 上传图片时附加的表单数据
+compress | 是否压缩图片 | Object | Boolean | false | | 上传前是否压缩图片
 
 ### props.resultFilter
 

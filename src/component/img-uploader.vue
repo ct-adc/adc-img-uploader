@@ -84,6 +84,12 @@
                     }
                 }
             },
+            compress: {
+                type: [Boolean, Object],
+                default(){
+                    return false;
+                }
+            },
             fileSingleSizeLimit: {
                 type: Number,
                 default: 2 * 1024 * 1024
@@ -160,10 +166,12 @@
         mounted(){
             this.initUploader();
             setTimeout(()=> {
-                var element = this.$refs.root.querySelector('.webuploader-element-invisible');
-                if(element !== null){
-                    element.style.width = this.thumbnailWidth + 'px';
-                    element.style.height = this.thumbnailHeight + 'px';
+                if (typeof this.$refs.root !== 'undefined'){
+                    var element = this.$refs.root.querySelector('.webuploader-element-invisible');
+                    if(element !== null){
+                        element.style.width = this.thumbnailWidth + 'px';
+                        element.style.height = this.thumbnailHeight + 'px';
+                    }
                 }
             })
         },
@@ -242,6 +250,7 @@
                     auto: true,
                     chunked: true,
                     accept: that.accept,
+                    compress: that.compress,
                     fileSingleSizeLimit: that.fileSingleSizeLimit,
                     fileNumLimit: that.fileNumLimit
                 });
@@ -440,6 +449,12 @@
                 }
             },
             fileSingleSizeLimit(){
+                if (typeof this.uploader !== 'undefined'){
+                    this.uploader.destroy();
+                    this.initUploader();
+                }
+            },
+            compress(){
                 if (typeof this.uploader !== 'undefined'){
                     this.uploader.destroy();
                     this.initUploader();
