@@ -1,3 +1,7 @@
+#
+
+不再维护，请使用[ct-adc-uploader](https://github.com/ct-adc/adc-uploader)
+
 ## ct-adc-img-uploader
 
 图片上传组件；用于一个或多个图片文件的上传；
