@@ -252,7 +252,10 @@
                     accept: that.accept,
                     compress: that.compress,
                     fileSingleSizeLimit: that.fileSingleSizeLimit,
-                    fileNumLimit: that.fileNumLimit
+                    fileNumLimit: that.fileNumLimit,
+                    thumb: {
+                        type: ''
+                    }
                 });
 
                 function addFile(file) {
